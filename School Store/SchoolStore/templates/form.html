@@ -1,0 +1,89 @@
+{% extends 'home.html' %}
+{% block body %}
+<div class="container">
+  <form action="" method="POST">
+    {% csrf_token %}
+      {{ form.as_p }}
+      <h1 align="center"><u>FORM</u></h1>
+    <label>Name:</label>
+      <input type="text" name="name"><br><br>
+    <label>DOB:</label>
+      <input type="date" name="date"><br><br>
+    <label>Age:</label>
+      <input type="text" name="number"><br><br>
+    <label>Gender:</label>
+      <input type="radio" name="gender" value="male" checked>Male
+      <input type="radio" name="gender" value="female">FeMale
+      <input type="radio" name="gender" value="other" >Other<br><br>
+    <label>Email ID:</label>
+      <input type="text" name="email"><br><br>
+    <label>Address:</label>
+      <textarea name="message" rows="5" cols="60"></textarea><br><br>
+    <label>Department:</label>
+      <select name="department">
+          <option value="disabled selected">Choose</option>
+		<option value="Biology Science">Science</option>
+		<option value="Computer Science">Computer Science</option>
+		<option value="Humanities">Humanities</option>
+		<option value="Commerce">Commerce</option>
+	</select><br><br>
+
+    <label>Course:</label>
+      <select name="department">
+          <option value="disabled selected">Choose</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+	</select><br><br>
+
+    <label>Purpose:</label>
+      <select name="purpose">
+          <option value="disabled selected">Choose</option>
+		<option value="1">Enquiry</option>
+		<option value="2">Place Order</option>
+		<option value="3">Return</option>
+<!--		<option value="4"></option>-->
+	</select><br><br>
+
+      <label>Materials Provide:</label><br>
+      <label>Note Book:</label>
+      <input type="checkbox"  name="myCheckbox" value="Note Book">
+      <label>Pen:</label>
+      <input type="checkbox"  name="myCheckbox" value="Pen">
+      <label>Paper:</label>
+      <input type="checkbox"  name="myCheckbox" value="Paper">
+      <label>Pencil:</label>
+      <input type="checkbox"  name="myCheckbox" value="Pencil">
+      <label>Text:</label>
+      <input type="checkbox"  name="myCheckbox" value="Text">
+      <label>Record Books:</label>
+      <input type="checkbox"  name="myCheckbox" value="Record Books">
+      <label>Forms:</label>
+      <input type="checkbox"  name="myCheckbox" value="Forms">
+        <br><br>
+      <input type="submit" value="SUBMIT">
+  </form>
+</div>
+
+<script>
+        $(document).ready(function() {
+            $('#id_department').change(function() {
+                var departmentId = $(this).val();
+                $.ajax({
+                    url: '{% url "store_form" %}',
+                    data: {'department_id': departmentId},
+                    dataType: 'json',
+                    success: function(data) {
+                        var courseSelect = $('#id_course');
+                        courseSelect.empty();
+                        $.each(data.courses, function(key, value) {
+                            courseSelect.append($('<option></option>').attr('value', key).text(value));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

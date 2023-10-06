@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+{% block body %}
+<div class="log">
+     <h2 style="text-align:center; color: blue;">LOGIN</h2>
+    <br>
+
+    <form action="login" method="POST">
+        {% csrf_token %}
+        <span class="sty"> Username: </span><input type="text" name="username" required=""><br><br>
+        <span class="sty"> Password:</span><input type="password" name="password" required=""><br><br><br>
+
+        <br><br>
+        <input type="submit" value="LOGIN"><br><br>
+        <a href="{% url 'register' %}" >Create a account</a>
+    </form>
+</div>
+{% endblock %}
